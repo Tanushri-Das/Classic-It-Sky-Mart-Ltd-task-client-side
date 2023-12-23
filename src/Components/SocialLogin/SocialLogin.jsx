@@ -44,12 +44,11 @@ const SocialLogin = () => {
     <div className="flex justify-center items-center google-btn-div">
       <button
         onClick={handleGoogleSignIn}
-        className="google-btn flex items-center py-4"
+        className="flex items-center p-4 border border-gray-500 rounded-full"
       >
-        <FaGoogle className="ms-[7px] text-white" />
-        <p className="ms-[111px] text-white text-[16px] font-semibold">
-          Continue with Google
-        </p>
+        <div className="flex items-center justify-center bg-white rounded-full p-2">
+          <FaGoogle />
+        </div>
       </button>
     </div>
   );

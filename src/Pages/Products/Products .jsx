@@ -155,22 +155,6 @@
 
 // export default ProductList;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import React, { useState, useEffect } from "react";
 // import "./ProductList.css";
 // import { Link } from "react-router-dom";
@@ -283,7 +267,7 @@
 //               <button className="bg-sky-500 px-10 py-5 text-lg font-semibold text-white rounded-lg">Details</button>
 //             </Link>
 //             </div>
-            
+
 //           </div>
 //         ))}
 //       </div>
@@ -293,42 +277,25 @@
 
 // export default ProductList;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect } from "react";
-import "./ProductList.css";
+import "./Products.css";
 import { Link } from "react-router-dom";
+import CustomSpinner from "../../Components/CustomSpinner/CustomSpinner";
 
-const ProductList = () => {
+const Products = () => {
   const [products, setProducts] = useState([]);
+  const [selectedVariations, setSelectedVariations] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch products from the JSON file
-    fetch("http://localhost:5000/products") // Update the path to your JSON file
+    fetch("http://localhost:5000/products")
       .then((response) => response.json())
-      .then((data) => setProducts(data))
+      .then((data) => {
+        setProducts(data);
+        setLoading(false); // Set loading to false after fetching data
+      })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
-
-  const [selectedVariations, setSelectedVariations] = useState({});
 
   useEffect(() => {
     // Initialize selectedVariations with default values (blue color)
@@ -337,7 +304,7 @@ const ProductList = () => {
       products.forEach((product) => {
         initialSelectedVariations[product._id] = {
           color: "Blue",
-          size: "Medium", // You can set the default size here
+          size: "Small", // You can set the default size here
         };
       });
       setSelectedVariations(initialSelectedVariations);
@@ -345,105 +312,105 @@ const ProductList = () => {
   }, [products]);
 
   const handleColorChange = (productId, color) => {
-    // Allow only "Blue" and "Pink" as color variations
-    if (color === "Blue" || color === "Pink") {
-      setSelectedVariations((prevVariations) => ({
-        ...prevVariations,
-        [productId]: { ...prevVariations[productId], color },
-      }));
-    }
+    setSelectedVariations((prevVariations) => ({
+      ...prevVariations,
+      [productId]: { ...prevVariations[productId], color },
+    }));
   };
 
   const handleSizeChange = (productId, size) => {
-    // Allow only "Medium" and "Large" as size variations
-    if (size === "Medium" || size === "Large") {
-      setSelectedVariations((prevVariations) => ({
-        ...prevVariations,
-        [productId]: { ...prevVariations[productId], size },
-      }));
-    }
+    setSelectedVariations((prevVariations) => ({
+      ...prevVariations,
+      [productId]: { ...prevVariations[productId], size },
+    }));
   };
 
   return (
-    <div className="border-2 border-green-600">
-      <h1 className="text-3xl mb-8 text-center">See All products</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-20">
-        {products.map((product) => (
-          <div key={product._id} className="product">
-            <div className="flex justify-center">
-              <img
-                className="h-60"
-                src={
-                  product.imageUrls[
-                    selectedVariations[product._id]?.color || "Blue"
-                  ]
-                }
-                alt={product.name}
-              />
-            </div>
-            <h2 className="text-center my-5 text-xl font-bold">
-              {product.name}
-            </h2>
-            <div className="flex flex-col items-center">
-              <div className="text-center mb-3">
-                <h3 className="text-lg font-semibold">Select Color:</h3>
-                <div className="flex">
-                  {product.variations.color
-                    .filter((color) => ["Blue", "Pink"].includes(color))
-                    .map((color) => (
-                      <label key={color} className="text-center me-2">
-                        <input
-                          type="radio"
-                          value={color}
-                          checked={
-                            selectedVariations[product._id]?.color === color
+    <div className="my-12">
+      <h1 className="text-3xl mb-12 text-center font-bold">All products</h1>
+      {loading ? (
+        <CustomSpinner /> // Show the spinner while loading
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mx-8 xl:mx-20">
+          {products.map((product) => (
+            <div key={product._id} className="product">
+              <div className="flex justify-center">
+                <img
+                  className="h-60"
+                  src={
+                    product.imageUrls[
+                      selectedVariations[product._id]?.color || "Blue"
+                    ]
+                  }
+                  alt={product.name}
+                />
+              </div>
+              <h2 className="text-center mt-5 mb-2 text-xl font-bold">
+                {product.name}
+              </h2>
+              <div className="flex flex-col items-center">
+                <div className="text-center mb-3">
+                  <h3 className="text-lg font-semibold mb-1">
+                    Select Color :{" "}
+                  </h3>
+                  <div className="flex justify-center">
+                    {product.variations.color
+                      .filter((color) => ["Blue", "Pink"].includes(color))
+                      .map((colorOption) => (
+                        <div
+                          key={colorOption}
+                          onClick={() =>
+                            handleColorChange(product._id, colorOption)
                           }
-                          onChange={() => handleColorChange(product._id, color)}
-                        />
-                        {color}
-                      </label>
-                    ))}
+                          className={`w-6 h-6 rounded-full mr-2 cursor-pointer ${
+                            colorOption ===
+                            selectedVariations[product._id]?.color
+                              ? `border-2 border-green-500`
+                              : ""
+                          }`}
+                          style={{ backgroundColor: colorOption.toLowerCase() }}
+                        ></div>
+                      ))}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="text-center mb-3">
-                <h3 className="text-lg font-semibold">Select Size:</h3>
-                <div className="flex">
-                  {product.variations.size
-                    .filter((size) => ["Medium", "Large"].includes(size))
-                    .map((size) => (
-                      <label key={size} className="text-center me-2">
-                        <input
-                          type="radio"
-                          value={size}
-                          checked={
-                            selectedVariations[product._id]?.size === size
+              <div className="flex flex-col items-center">
+                <div className="text-center mb-3">
+                  <h3 className="text-lg font-semibold mb-1">Select Size : </h3>
+                  <div className="flex">
+                    {product.variations.size
+                      .filter((size) => ["Small", "Medium"].includes(size))
+                      .map((sizeOption) => (
+                        <div
+                          key={sizeOption}
+                          onClick={() =>
+                            handleSizeChange(product._id, sizeOption)
                           }
-                          onChange={() => handleSizeChange(product._id, size)}
-                        />
-                        {size}
-                      </label>
-                    ))}
+                          className={`px-2 py-1 border rounded-full mr-2 cursor-pointer text-[16px] font-medium ${
+                            sizeOption === selectedVariations[product._id]?.size
+                              ? `border-blue-500`
+                              : ""
+                          }`}
+                        >
+                          {sizeOption}
+                        </div>
+                      ))}
+                  </div>
                 </div>
               </div>
+              <div className="flex justify-center my-5">
+                <Link to={`/product/${product._id}`} key={product._id}>
+                  <button className="bg-sky-500 px-10 py-5 text-lg font-semibold text-white rounded-lg">
+                    Details
+                  </button>
+                </Link>
+              </div>
             </div>
-            <div className="flex justify-center my-5">
-              <Link
-                to={`/product/${product._id}`}
-                key={product._id}
-                // Add any other necessary onClick logic here
-              >
-                <button className="bg-sky-500 px-10 py-5 text-lg font-semibold text-white rounded-lg">
-                  Details
-                </button>
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default ProductList;
+export default Products;

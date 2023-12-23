@@ -5,11 +5,4 @@
   line-height: 9px;
   letter-spacing: 0.396px;
 }
-.login-btn {
-  border-radius: 5px;
-  background: var(--PINK, #f63e7b);
-  padding: 10px 47px;
-  font-style: normal;
-  line-height: 24px;
-  text-align: center; /* Center text vertically */
-}
+

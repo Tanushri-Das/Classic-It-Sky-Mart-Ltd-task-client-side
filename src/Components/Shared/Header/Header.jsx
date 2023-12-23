@@ -6,7 +6,7 @@ import useAuth from "../../../Hooks/useAuth";
 
 const Header = () => {
   const { user, logOut } = useAuth();
-    // console.log("user:",user.displayName)
+  // console.log("user:",user.displayName)
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavbar = () => {
@@ -18,12 +18,16 @@ const Header = () => {
       .catch((error) => console.error(error));
   };
   return (
-    <nav className="pt-8">
-      <div className="max-w-7xl lg:mx-[135px] mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="shadow-lg">
+      <div className="px-4 sm:px-6 py-3 lg:px-20">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <h2>Products</h2>
+            <div className="flex items-center space-x-2">
+              <h2
+                className="text-2xl md:text-3xl font-semibold header-logo-text"
+              >
+              ShopLoom
+              </h2>
             </div>
           </div>
           <div className="flex items-center">
@@ -31,26 +35,23 @@ const Header = () => {
               <div className="flex items-baseline space-x-4">
                 <NavLink
                   to="/"
-                  className="text-sm font-semibold navtext pe-[40px]"
+                  className="text-lg font-semibold navtext lg:pe-2 xl:pe-[20px]"
                 >
                   Home
                 </NavLink>
                 <NavLink
-                  to="/dashboard"
-                  className="text-sm font-semibold navtext pe-[40px]"
+                  to="/products"
+                  className="text-lg font-semibold navtext lg:pe-2 xl:pe-[20px]"
                 >
-                  Dashboard
+                  Products
                 </NavLink>
-
+                
                 {user ? (
                   <>
-                    <li className="flex justify-center items-center text-sm font-semibold pe-[40px]">
-                      {user?.displayName}
-                    </li>
                     <li className="flex justify-center">
                       <button
                         onClick={handleLogout}
-                        className="login-btn text-sm font-semibold text-white"
+                        className="login-btn text-lg font-semibold text-white px-8 py-3"
                       >
                         Logout
                       </button>
@@ -60,7 +61,7 @@ const Header = () => {
                   <>
                     <li className="flex justify-center">
                       <Link
-                        className="login-btn text-[16px] font-semibold text-white"
+                        className="login-btn text-lg font-semibold text-white px-8 py-3"
                         to="/login"
                       >
                         Login
@@ -74,7 +75,7 @@ const Header = () => {
               <button
                 onClick={toggleNavbar}
                 type="button"
-                className="bg-[#f63e7b] inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-[#f63e7b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-none focus:ring-white"
+                className="bg-[#032174] inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-[#032174] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-none focus:ring-white"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
@@ -121,28 +122,22 @@ const Header = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
-          <div className="px-4 pt-8 pb-3 space-y-1 sm:px-3">
-            <NavLink
-              to="/"
-              className="text-sm font-semibold navtext block mb-5"
-            >
+          <div className="px-4 sm:px-6 py-3 lg:px-2">
+            <NavLink to="/" className="text-lg font-semibold navtext block mb-5">
               Home
             </NavLink>
             <NavLink
-              to="/dashboard"
-              className="text-sm font-semibold navtext block mb-5"
+              to="/products"
+              className="text-lg font-semibold navtext block"
             >
-              Dashboard
+              Products
             </NavLink>
             {user ? (
               <div className="">
-                <li className="list-none text-sm font-semibold navtext block mt-5 mb-5 md:mb-0">
-                  {user?.displayName}
-                </li>
-                <li className="list-none">
+                <li className="list-none mt-5">
                   <button
                     onClick={handleLogout}
-                    className="login-btn text-[16px] font-semibold text-white"
+                    className="login-btn text-lg font-semibold text-white px-8 py-3"
                   >
                     Logout
                   </button>
@@ -150,9 +145,9 @@ const Header = () => {
               </div>
             ) : (
               <>
-                <li className="list-none pt-7">
+                <li className="list-none mb-5 mt-7">
                   <Link
-                    className="login-btn text-[16px] font-semibold text-white"
+                    className="login-btn text-lg font-semibold text-white px-8 py-3"
                     to="/login"
                   >
                     Login
