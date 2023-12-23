@@ -1,33 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "./Header.css";
 import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import useAuth from "../../../Hooks/useAuth";
 
 const Header = () => {
   const { user, logOut } = useAuth();
-  // console.log("user:",user.displayName)
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
   const handleLogout = () => {
     logOut()
       .then(() => {})
       .catch((error) => console.error(error));
   };
+
+  const closeNavbar = () => {
+    setIsOpen(false);
+  };
+
   return (
     <nav className="shadow-lg">
       <div className="px-4 sm:px-6 py-3 lg:px-20">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex items-center space-x-2">
-              <h2
-                className="text-2xl md:text-3xl font-semibold header-logo-text"
-              >
-              Shop<span className="text-amber-600">Loom</span> 
-              </h2>
+              <Link to="/">
+                <h2 className="text-2xl md:text-3xl font-semibold header-logo-text">
+                  Shop<span className="text-amber-600">Loom</span>
+                </h2>
+              </Link>
             </div>
           </div>
           <div className="flex items-center">
@@ -36,16 +40,18 @@ const Header = () => {
                 <NavLink
                   to="/"
                   className="text-lg font-semibold navtext lg:pe-2 xl:pe-[20px]"
+                  onClick={closeNavbar}
                 >
                   Home
                 </NavLink>
                 <NavLink
                   to="/products"
                   className="text-lg font-semibold navtext lg:pe-2 xl:pe-[20px]"
+                  onClick={closeNavbar}
                 >
                   Products
                 </NavLink>
-                
+
                 {user ? (
                   <>
                     <li className="flex justify-center">
@@ -63,6 +69,7 @@ const Header = () => {
                       <Link
                         className="login-btn text-lg font-semibold text-white px-8 py-3"
                         to="/login"
+                        onClick={closeNavbar}
                       >
                         Login
                       </Link>
@@ -123,12 +130,17 @@ const Header = () => {
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-4 sm:px-6 py-3 lg:px-2">
-            <NavLink to="/" className="text-lg font-semibold navtext block mb-5">
+            <NavLink
+              to="/"
+              className="text-lg font-semibold navtext block mb-5"
+              onClick={closeNavbar}
+            >
               Home
             </NavLink>
             <NavLink
               to="/products"
               className="text-lg font-semibold navtext block"
+              onClick={closeNavbar}
             >
               Products
             </NavLink>
@@ -149,6 +161,7 @@ const Header = () => {
                   <Link
                     className="login-btn text-lg font-semibold text-white px-8 py-3"
                     to="/login"
+                    onClick={closeNavbar}
                   >
                     Login
                   </Link>
