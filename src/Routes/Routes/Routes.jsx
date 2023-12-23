@@ -5,6 +5,7 @@ import ProductDetails from "../../Pages/ProductDetails/ProductDetails";
 import SignUp from "../../Pages/SignUp/SignUp";
 import Login from "../../Pages/Login/Login";
 import Products from "../../Pages/Products/Products ";
+import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 
 const routes = createBrowserRouter([
   {
@@ -29,8 +30,8 @@ const routes = createBrowserRouter([
       },
       {
         path: "/product/:id",
-        element: <ProductDetails />,
-        loader:({params})=>fetch(`http://localhost:5000/product/${params.id}`)
+        element:<PrivateRoutes><ProductDetails /></PrivateRoutes>,
+        loader:({params})=>fetch(`https://classic-it-task-server-side.vercel.app/product/${params.id}`)
       },
     ],
   },

@@ -26,7 +26,7 @@ const Header = () => {
               <h2
                 className="text-2xl md:text-3xl font-semibold header-logo-text"
               >
-              ShopLoom
+              Shop<span className="text-amber-600">Loom</span> 
               </h2>
             </div>
           </div>
