@@ -72,7 +72,7 @@ const Products = () => {
 
               <div className="flex flex-row justify-center items-center mb-3">
                 <h3 className="text-base sm:text-lg font-semibold">
-                  Select Color:
+                  Select Color :
                 </h3>
                 <div className="flex ms-2">
                   {product.variations.color
@@ -96,7 +96,7 @@ const Products = () => {
 
               <div className="flex  flex-row justify-center items-center mb-3">
                 <h3 className="text-base sm:text-lg font-semibold">
-                  Select Size:
+                  Select Size :
                 </h3>
                 <div className="flex ms-2">
                   {product.variations.size

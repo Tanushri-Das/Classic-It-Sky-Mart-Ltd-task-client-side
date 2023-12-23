@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import "./SignUp.css";
 import Swal from "sweetalert2";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 import useAuth from "../../Hooks/useAuth";
-import { Helmet } from "react-helmet-async";
-
 const SignUp = () => {
   const { createUser, updateUserProfile } = useAuth();
   const {
@@ -29,12 +26,10 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     if (data.password !== data.confirmPassword) {
-      // Passwords do not match, set passwordsMatch to false
       setPasswordsMatch(false);
       return;
     }
 
-    // Passwords match, proceed with form submission.
     setPasswordsMatch(true);
 
     console.log(data);
@@ -60,8 +55,8 @@ const SignUp = () => {
                   title: "Good job!",
                   text: "Congratulations! Sign Up Successfully!",
                   icon: "success",
-                  timer: 1500, // Close after 1500 milliseconds (1.5 seconds)
-                  showConfirmButton: false, // Hide the "OK" button
+                  timer: 1500, 
+                  showConfirmButton: false,
                 });
 
                 navigate("/");

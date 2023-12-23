@@ -54,7 +54,7 @@ const Footer = () => {
               <FaFacebook size={24} />
             </a>
             <a
-              href="https://www.linkedin.com/in/tanushri-das-06a520194/"
+              href="https://www.youtube.com/watch?v=TCwQlwq4uwc"
               target="_blank"
               className="rounded-full bg-white p-2"
             >
